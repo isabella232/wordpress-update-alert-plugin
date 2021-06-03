@@ -1,14 +1,32 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: Ben
- * Date: 14/09/2016
- * Time: 14:06
+ * User: Théo
+ * Date: 09/04/2021
  */
 
-require_once(dirname(__FILE__).'/../../../wp-load.php');
-require_once(dirname(__FILE__).'/../../../wp-admin/includes/plugin.php');
-require_once(dirname(__FILE__).'/../../../wp-admin/includes/update.php');
+$pathToBasicWordpress = dirname(__FILE__) . '/../../..';
+$pathToBedrockWordpress = dirname(__FILE__, 4) . '/wp';
+
+$pathToWordpress = is_dir($pathToBedrockWordpress) ? $pathToBedrockWordpress : $pathToBasicWordpress;
+
+$wpLoadFile = "{$pathToWordpress}/wp-load.php";
+$wpPluginFile = "{$pathToWordpress}/wp-admin/includes/plugin.php";
+$wpUpdateFile = "{$pathToWordpress}/wp-admin/includes/update.php";
+
+if (!file_exists($wpLoadFile)) {
+  throw new \Exception("The {$wpLoadFile} couldn't be found.");
+}
+if (!file_exists($wpPluginFile)) {
+  throw new \Exception("The {$wpPluginFile} couldn't be found.");
+}
+if (!file_exists($wpUpdateFile)) {
+  throw new \Exception("The {$wpUpdateFile} couldn't be found.");
+}
+
+require_once($wpLoadFile);
+require_once($wpPluginFile);
+require_once($wpUpdateFile);
 require_once 'UpdateAlertCron.php';
 require_once 'UpdateAlertAlert.php';
 require_once 'UpdateAlertModule.php';
